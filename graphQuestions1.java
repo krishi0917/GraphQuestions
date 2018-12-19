@@ -2,17 +2,17 @@ package Graph;
 
 import java.util.*;
 public class graphQuestions1 {
-	/**
-	 * Given a directed graph clone it in O(n) time where n is total number of edges
-	 * Test cases
-	 * Graph is directed/non directed
-	 * Graph has 0 edges
-	 * Graph has cycle
-	 * Graph is linear
-	 * Graph is dense
-	 * Graph is sparse
-	 */
-	
+    /**
+     * Given a directed graph clone it in O(n) time where n is total number of edges
+     * Test cases
+     * Graph is directed/non directed
+     * Graph has 0 edges
+     * Graph has cycle
+     * Graph is linear
+     * Graph is dense
+     * Graph is sparse
+     */
+
 //	Clone Directed Graph
 //    public Graph<T> clone(Graph<T> graph){
 //        if(graph == null){
@@ -68,24 +68,23 @@ public class graphQuestions1 {
 //        }
 //    }
 //
-
     public UndirectedGraphNode cloneGraph1(UndirectedGraphNode node) {
 
         return clone(node, new HashMap<>());
     }
 
-    UndirectedGraphNode clone(UndirectedGraphNode src, HashMap<UndirectedGraphNode, UndirectedGraphNode> visitedBag){
-        if (src == null){
+    UndirectedGraphNode clone(UndirectedGraphNode src, HashMap<UndirectedGraphNode, UndirectedGraphNode> visitedBag) {
+        if (src == null) {
             return null;
         }
-        if (visitedBag.containsKey(src)){
+        if (visitedBag.containsKey(src)) {
             return visitedBag.get(src);
         }
 
         UndirectedGraphNode n = new UndirectedGraphNode(src.label);
         visitedBag.put(src, n);
-        for (UndirectedGraphNode child : src.neighbors){
-            if (visitedBag.containsKey(child)){
+        for (UndirectedGraphNode child : src.neighbors) {
+            if (visitedBag.containsKey(child)) {
                 n.neighbors.add(visitedBag.get(child));
             } else {
                 UndirectedGraphNode childCopy = clone(child, visitedBag);
@@ -95,10 +94,10 @@ public class graphQuestions1 {
         return n;
     }
 
-    
 
-//below is the second solution for the same
+    //below is the second solution for the same
     private HashMap<Integer, UndirectedGraphNode> map = new HashMap<>();
+
     public UndirectedGraphNode cloneGraph2(UndirectedGraphNode node) {
         return clone(node);
     }
@@ -117,7 +116,7 @@ public class graphQuestions1 {
         return clone;
     }
 
-//Tushar roy method
+    //Tushar roy method
     public UndirectedGraphNode cloneGraphthirdmethod(UndirectedGraphNode node) {
         if (node == null) {
             return null;
@@ -130,7 +129,7 @@ public class graphQuestions1 {
         return clone;
     }
 
-    private void dfs(UndirectedGraphNode current, UndirectedGraphNode clone, Map<Integer, UndirectedGraphNode> map,  Set<Integer> visited) {
+    private void dfs(UndirectedGraphNode current, UndirectedGraphNode clone, Map<Integer, UndirectedGraphNode> map, Set<Integer> visited) {
         if (visited.contains(current.label)) {
             return;
         }
@@ -149,8 +148,8 @@ public class graphQuestions1 {
             }
         }
     }
-    
-//topological sort    
+
+    //topological sort
     public Deque<Vertex<Integer>> topSort(Graph<Integer> graph) {
         Deque<Vertex<Integer>> stack = new ArrayDeque<>();
         Set<Vertex<Integer>> visited = new HashSet<>();
@@ -158,18 +157,18 @@ public class graphQuestions1 {
             if (visited.contains(vertex)) {
                 continue;
             }
-            topSortUtil(vertex,stack,visited);
+            topSortUtil(vertex, stack, visited);
         }
         return stack;
     }
 
     private void topSortUtil(Vertex<Integer> vertex, Deque<Vertex<Integer>> stack, Set<Vertex<Integer>> visited) {
         visited.add(vertex);
-        for(Vertex<Integer> childVertex : vertex.getAdjacentVertexes()){
-            if(visited.contains(childVertex)){
+        for (Vertex<Integer> childVertex : vertex.getAdjacentVertexes()) {
+            if (visited.contains(childVertex)) {
                 continue;
             }
-            topSortUtil(childVertex,stack,visited);
+            topSortUtil(childVertex, stack, visited);
         }
 
         //only when the vertex does not have any child, then it will put into the stack
@@ -197,50 +196,51 @@ public class graphQuestions1 {
             }
         }
     }
-    public void DFS(Graph<Integer> graph){
+
+    public void DFS(Graph<Integer> graph) {
         Set<Long> visited = new HashSet<Long>();
-        for(Vertex<Integer> vertex : graph.getAllVertex()){
-            if(!visited.contains(vertex.getId())){
-                DFSUtil(vertex,visited);
+        for (Vertex<Integer> vertex : graph.getAllVertex()) {
+            if (!visited.contains(vertex.getId())) {
+                DFSUtil(vertex, visited);
             }
         }
     }
 
-    private void DFSUtil(Vertex<Integer> v, Set<Long> visited){
+    private void DFSUtil(Vertex<Integer> v, Set<Long> visited) {
         visited.add(v.getId());
         System.out.print(v.getId() + " ");
-        for(Vertex<Integer> vertex : v.getAdjacentVertexes()){
-            if(!visited.contains(vertex.getId()))
-                DFSUtil(vertex,visited);
+        for (Vertex<Integer> vertex : v.getAdjacentVertexes()) {
+            if (!visited.contains(vertex.getId()))
+                DFSUtil(vertex, visited);
         }
     }
 
     //Cycle in undirected graph
-    public boolean hasCycleDFS(Graph<Integer> graph){
+    public boolean hasCycleDFS(Graph<Integer> graph) {
         Set<Vertex<Integer>> visited = new HashSet<Vertex<Integer>>();
-        for(Vertex<Integer> vertex : graph.getAllVertex()){
-            if(visited.contains(vertex)){
+        for (Vertex<Integer> vertex : graph.getAllVertex()) {
+            if (visited.contains(vertex)) {
                 continue;
             }
             boolean flag = hasCycleDFSUtil(vertex, visited, null);
-            if(flag){
+            if (flag) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean hasCycleDFSUtil(Vertex<Integer> vertex, Set<Vertex<Integer>> visited, Vertex<Integer> parent){
+    public boolean hasCycleDFSUtil(Vertex<Integer> vertex, Set<Vertex<Integer>> visited, Vertex<Integer> parent) {
         visited.add(vertex);
-        for(Vertex<Integer> adj : vertex.getAdjacentVertexes()){
-            if(adj.equals(parent)){
+        for (Vertex<Integer> adj : vertex.getAdjacentVertexes()) {
+            if (adj.equals(parent)) {
                 continue;
             }
-            if(visited.contains(adj)){
+            if (visited.contains(adj)) {
                 return true;
             }
-            boolean hasCycle = hasCycleDFSUtil(adj,visited,vertex);
-            if(hasCycle){
+            boolean hasCycle = hasCycleDFSUtil(adj, visited, vertex);
+            if (hasCycle) {
                 return true;
             }
         }
@@ -248,4 +248,30 @@ public class graphQuestions1 {
 
     }
 
+    public static void main(String args[]) {
+        Graph<Integer> graph = new Graph<Integer>(true);
+        graph.addEdge(1, 3);
+        graph.addEdge(1, 2);
+        graph.addEdge(3, 4);
+        graph.addEdge(4, 5);
+        graph.addEdge(5, 6);
+        graph.addEdge(6, 3);
+//        graph.addEdge(3, 8);
+//        graph.addEdge(8, 11);
+
+        //Topological Sort
+        graphQuestions1 graphQuestions = new graphQuestions1();
+//        Deque<Vertex<Integer>> result = sort.topSort(graph);
+//        while(!result.isEmpty()){
+//            System.out.println(result.poll());
+//        }
+
+        //Cycle undirected graph
+        boolean isCycle = graphQuestions.hasCycleDFS(graph);
+        System.out.println(isCycle);
+
+        //BFS Traversal Algorithm
+        // graphQuestions1.BFS(graph);
+
+    }
 }
